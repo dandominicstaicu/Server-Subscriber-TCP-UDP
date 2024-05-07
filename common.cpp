@@ -1,10 +1,16 @@
+/*
+ * Protocoale de comunicatii
+ * Schelet Laborator 7 - TCP
+ * Echo Server
+ */
+
 #include "common.h"
 
 #include <sys/socket.h>
 #include <sys/types.h>
 
 /*
-    primirea a exact len octeți din buffer.
+    receiving exactly len bytes from buffer.
 */
 int recv_all(int sockfd, void *buffer, size_t len) {
     size_t bytes_received = 0;
@@ -15,22 +21,21 @@ int recv_all(int sockfd, void *buffer, size_t len) {
     {
         int bytes = recv(sockfd, buff, bytes_remaining, 0);
 
-        // eroare
+        // error
         if (bytes < 0)
             return bytes;
 
-        // nu mai avem ce sa scriem in buffer de pe socket
+        // nothing left to write in the buffer
         if (bytes == 0)
             break;
 
         bytes_received += bytes;
         bytes_remaining -= bytes;
 
-        // Cast void* la char* deoarece
-        // nu se pot face adunari la void* in cpp
+        // cast void* to char* so it can add
         char *charPtr = static_cast<char *>(buff);
         charPtr += bytes;
-        // Cast char* inapoi la void*
+        // Cast char* back to void*
         buff = static_cast<void *>(charPtr);
     }
 
@@ -38,7 +43,7 @@ int recv_all(int sockfd, void *buffer, size_t len) {
 }
 
 /*
-    trimiterea a exact len octeți din buffer.
+    sending exactly len bytes from buffer
 */
 
 int send_all(int sockfd, void *buffer, size_t len) {
@@ -50,22 +55,21 @@ int send_all(int sockfd, void *buffer, size_t len) {
     {
         int bytes = send(sockfd, buff, bytes_remaining, 0);
 
-        // eroare
+        // error
         if (bytes < 0)
             return bytes;
 
-        // nu mai avem ce sa citim din buffer
+        // noting left to write in the buffer
         if (bytes == 0)
             break;
 
         bytes_sent += bytes;
         bytes_remaining -= bytes;
         
-        // Cast void* la char* deoarece
-        // nu se pot face adunari la void* in cpp
+        // Cast void* to char* deoarece so it can add
         char *charPtr = static_cast<char *>(buff);
         charPtr += bytes;
-        // Cast char* inapoi la void*
+        // Cast char* back to void*
         buff = static_cast<void *>(charPtr);
     }
 

@@ -1,6 +1,6 @@
 /*
  * Protocoale de comunicatii
- * Laborator 7 - TCP
+ * Schelet Laborator 7 - TCP
  * Echo Server
  * server.c
  */

@@ -1,3 +1,10 @@
+/*
+ * Protocoale de comunicatii
+ * Schelet Laborator 7 - TCP
+ * Echo Server
+ * server.c
+ */
+
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <cstdio>
